@@ -13,7 +13,7 @@ contract UniswapV3Oracle {
         uniswapV3PoolAddress = address(pool);
     }
 
-    function getPrice() public view returns(uint160 price, uint256 decimalAdjFactor) {
+    function getPrice() public view returns(uint32 price, uint32 decimalAdjFactor) {
         IUniswapV3Pool uniswapv3Pool = IUniswapV3Pool(uniswapV3PoolAddress);
 
         uint32[] memory secondAgos = new uint32[](2);
@@ -33,7 +33,7 @@ contract UniswapV3Oracle {
         uint160 sqrtRatioX96 = TickMath.getSqrtRatioAtTick(int24(timeWeightedAverageTick));
         uint256 ratioX192 = uint256(sqrtRatioX96) * sqrtRatioX96;
         price = uint32((ratioX192 * 1e18) >> (96 * 2));
-        decimalAdjFactor = uint256(10**(decimalToken0));
+        decimalAdjFactor = uint32(10**(decimalToken0));
         
     }
 }
